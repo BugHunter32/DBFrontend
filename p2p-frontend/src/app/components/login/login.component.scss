@@ -1,0 +1,90 @@
+// Use a modern, full-screen container to perfectly center the login form.
+.login-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; // Take up the full viewport height
+  background-color: #f4f7fc; // A light, neutral background color
+  padding: 20px;
+}
+
+.login-form-container {
+  width: 100%;
+  max-width: 420px; // A slightly wider card for better spacing
+}
+
+// Header styles for the "Welcome Back" text
+.login-header {
+  text-align: center;
+  margin-bottom: 24px;
+
+  h2 {
+    font-size: 2rem;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #333;
+  }
+
+  p {
+    font-size: 1rem;
+    color: #666;
+  }
+}
+
+// Card styling improvements
+mat-card {
+  padding: 24px 32px; // More internal padding for a spacious feel
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important; // Softer, more modern shadow
+  border-radius: 12px !important; // Softer corners
+}
+
+// Form field spacing
+.full-width {
+  width: 100%;
+}
+
+// Add more space below each form field
+mat-form-field {
+  margin-bottom: 12px;
+}
+
+// Primary action button
+.login-button {
+  width: 100%;
+  padding: 12px 0;
+  font-size: 1rem;
+  margin-top: 16px; // More space above the button
+  border-radius: 8px;
+}
+
+// Actions for registration link
+.login-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px; // Adds space between the text and the link
+  margin-top: 24px;
+  padding-bottom: 8px;
+  color: #555;
+
+  .register-link {
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--primary-color, #3f51b5); // Use theme primary color
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: var(--primary-darker-color, #303f9f);
+    }
+  }
+}
+
+// Style for the error message
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  text-align: center;
+}

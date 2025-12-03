@@ -1,0 +1,50 @@
+<div class="page-container">
+  <div class="wallet-container" *ngIf="!isLoading; else loadingSpinner">
+    
+    <!-- Balance and Actions Card -->
+    <mat-card class="balance-card">
+      <mat-card-title>My Wallet</mat-card-title>
+      <mat-card-content>
+        <div class="balance-item">
+          <span class="label">
+            <mat-icon>account_balance_wallet</mat-icon>
+            Cash Balance
+          </span>
+          <span class="value">{{ wallet?.balance | currency:'USD' }}</span>
+        </div>
+        
+        <mat-divider></mat-divider>
+        
+        <!-- This section only appears for users (like Borrowers) whose withdrawable balance is different from their total balance -->
+        <div class="balance-item" *ngIf="withdrawableBalance && wallet && withdrawableBalance.withdrawableAmount < wallet.balance">
+          <span class="label">
+            <mat-icon>local_atm</mat-icon>
+            Withdrawable Balance
+          </span>
+          <span class="value accent">{{ withdrawableBalance.withdrawableAmount | currency:'USD' }}</span>
+        </div>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-stroked-button color="primary" (click)="openDepositDialog()">
+          <mat-icon>add_circle_outline</mat-icon>
+          Deposit
+        </button>
+        <button mat-flat-button color="accent" (click)="openWithdrawDialog()" [disabled]="!withdrawableBalance || withdrawableBalance.withdrawableAmount <= 0">
+          <mat-icon>remove_circle_outline</mat-icon>
+          Withdraw
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  
+    <!-- Transaction History Component -->
+    <app-transaction-history [transactions]="transactions"></app-transaction-history>
+  
+  </div>
+  
+  <!-- Loading Spinner Template -->
+  <ng-template #loadingSpinner>
+    <div class="spinner-container">
+      <mat-spinner diameter="50"></mat-spinner>
+    </div>
+  </ng-template>
+</div>

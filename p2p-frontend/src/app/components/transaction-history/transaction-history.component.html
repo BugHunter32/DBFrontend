@@ -1,0 +1,40 @@
+<mat-card class="history-card">
+  <mat-card-title>Transaction History</mat-card-title>
+  
+  <mat-card-content>
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="state-container">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Loading history...</p>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!isLoading && transactions.length === 0" class="state-container">
+      <mat-icon>history_toggle_off</mat-icon>
+      <p>You have no transactions yet.</p>
+    </div>
+
+    <!-- Data State -->
+    <mat-list *ngIf="!isLoading && transactions.length > 0">
+      <ng-container *ngFor="let tx of transactions; let last = last">
+        <mat-list-item>
+          <mat-icon mat-list-icon [ngClass]="getTransactionDisplay(tx.transactionType).colorClass" [matTooltip]="tx.transactionType">
+            {{ getTransactionDisplay(tx.transactionType).icon }}
+          </mat-icon>
+          
+          <div mat-line class="description">{{ tx.description }}</div>
+          
+          <div mat-line class="details">
+            <span class="timestamp">{{ tx.createdAt | date:'MMM d, y, h:mm a' }}</span>
+            <span class="balance-after">Balance: {{ tx.balanceAfter | currency:'USD' }}</span>
+          </div>
+
+          <div class="amount" [ngClass]="getTransactionDisplay(tx.transactionType).colorClass">
+            {{ tx.amount > 0 ? '+' : '' }}{{ tx.amount | currency:'USD' }}
+          </div>
+        </mat-list-item>
+        <mat-divider *ngIf="!last"></mat-divider>
+      </ng-container>
+    </mat-list>
+  </mat-card-content>
+</mat-card>

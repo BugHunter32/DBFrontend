@@ -1,0 +1,81 @@
+<div class="profile-page-container">
+  <div class="profile-card-container">
+    <!-- Loading Spinner Template -->
+    <div *ngIf="isLoading" class="spinner-container">
+      <mat-spinner diameter="60"></mat-spinner>
+    </div>
+
+    <mat-card *ngIf="!isLoading && userProfile">
+      <!-- ==================== PROFILE HEADER ==================== -->
+      <div class="profile-header">
+        <div class="avatar-container">
+          <mat-icon>person</mat-icon>
+        </div>
+        <div class="user-info">
+          <h2>{{ userProfile.firstName }} {{ userProfile.lastName }}</h2>
+          <p class="user-role">{{ userProfile.role }}</p>
+        </div>
+        <div class="header-actions">
+          <button *ngIf="!isEditMode" mat-stroked-button color="primary" (click)="toggleEditMode()">
+            <mat-icon>edit</mat-icon>
+            <span>Edit Profile</span>
+          </button>
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <mat-card-content>
+        <!-- ==================== DISPLAY MODE ==================== -->
+        <div *ngIf="!isEditMode" class="display-mode">
+          <div class="details-grid">
+            <!-- Email -->
+            <div class="info-item">
+              <mat-icon>email</mat-icon>
+              <div class="info-text">
+                <span class="label">Email Address</span>
+                <span class="value">{{ userProfile.email }}</span>
+              </div>
+            </div>
+            <!-- Phone Number -->
+            <div class="info-item">
+              <mat-icon>phone</mat-icon>
+              <div class="info-text">
+                <span class="label">Phone Number</span>
+                <span class="value">{{ userProfile.phoneNumber || 'Not Provided' }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== EDIT MODE ==================== -->
+        <form *ngIf="isEditMode" [formGroup]="profileForm" (ngSubmit)="onSave()" class="edit-mode">
+          <div class="name-fields-container">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>First Name</mat-label>
+              <input matInput formControlName="firstName" required>
+              <mat-error>First name is required</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Last Name</mat-label>
+              <input matInput formControlName="lastName" required>
+              <mat-error>Last name is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Phone Number</mat-label>
+            <input matInput formControlName="phoneNumber" placeholder="e.g., (123) 456-7890">
+          </mat-form-field>
+
+          <div class="form-actions">
+            <button mat-stroked-button type="button" (click)="toggleEditMode()">Cancel</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="profileForm.invalid || !profileForm.dirty">
+              Save Changes
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

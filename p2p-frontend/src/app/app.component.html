@@ -1,0 +1,51 @@
+<mat-toolbar color="primary">
+  <span>P2P Lending Platform</span>
+  <span class="spacer"></span>
+  
+
+  <ng-container *ngIf="authService.isLoggedIn$ | async as isLoggedIn">
+  <a mat-button routerLink="/profile">Profile</a>
+
+     <a *ngIf="userRole === 'ADMIN'" mat-button routerLink="/admin">
+      <mat-icon>admin_panel_settings</mat-icon>
+      Admin Panel
+    </a>
+    
+     <ng-container *ngIf="userRole === 'BORROWER'">
+      <a mat-button routerLink="/my-loans">My Loans</a>
+      <a mat-button routerLink="/apply-for-loan">Apply for Loan</a>
+    </ng-container>
+
+    
+    <!-- LENDER-specific links -->
+   <ng-container *ngIf="userRole === 'LENDER'">
+  <a mat-button routerLink="/marketplace">Marketplace</a>
+  <a mat-button routerLink="/secondary-market">Secondary Market</a>
+  <a mat-button routerLink="/my-loans">My Investments</a>
+  <a mat-button routerLink="/settings/robo-advisor">Robo-Advisor</a>
+  
+  </ng-container>
+ 
+
+
+  <a mat-button routerLink="/stock-market">Stock Market</a>
+  <a mat-button routerLink="/stock-portfolio">My Stocks</a>
+   <ng-container *ngIf="userRole === 'BORROWER' || userRole === 'LENDER'">
+     <a mat-button routerLink="/kyc">KYC</a>
+      <a mat-button routerLink="/wallet">Wallet</a>
+      <a mat-button routerLink="/stock-market">Stock Market</a>
+      <a mat-button routerLink="/stock-portfolio">My Stocks</a>
+    <button mat-button (click)="logout()">Logout</button>
+
+    </ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="!(authService.isLoggedIn$ | async)">
+    <a mat-button routerLink="/login">Login</a>
+    <a mat-button routerLink="/register">Register</a>
+  </ng-container>
+</mat-toolbar>
+
+<main class="content">
+  <router-outlet></router-outlet>
+</main>

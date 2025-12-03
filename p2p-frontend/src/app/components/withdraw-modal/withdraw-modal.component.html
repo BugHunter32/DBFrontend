@@ -1,0 +1,27 @@
+<div class="wallet-container" *ngIf="!isLoading; else loadingSpinner">
+  <mat-card class="balance-card">
+    <mat-card-title>My Wallet</mat-card-title>
+    <mat-card-content>
+      <div class="balance-item">
+        <span class="label">Cash Balance</span>
+        <span class="value">{{ wallet?.balance | number:'1.2-2' }}</span>
+      </div>
+      <!-- This logic makes sure the 'Withdrawable' row only shows if it's different from the main balance -->
+      <div class="balance-item" *ngIf="withdrawableBalance && wallet && withdrawableBalance.withdrawableAmount < wallet.balance">
+        <span class="label">Withdrawable Balance</span>
+        <span class="value">{{ withdrawableBalance.withdrawableAmount | number:'1.2-2' }}</span>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="openDepositDialog()">Deposit</button>
+      <button mat-raised-button color="accent" (click)="openWithdrawDialog()" [disabled]="!withdrawableBalance || withdrawableBalance.withdrawableAmount <= 0">Withdraw</button>
+    </mat-card-actions>
+  </mat-card>
+
+  <!-- THIS IS THE FIX: Add the component's selector here -->
+  <app-transaction-history [transactions]="transactions"></app-transaction-history>
+</div>
+
+<ng-template #loadingSpinner>
+  <div class="spinner-container"><mat-spinner></mat-spinner></div>
+</ng-template>

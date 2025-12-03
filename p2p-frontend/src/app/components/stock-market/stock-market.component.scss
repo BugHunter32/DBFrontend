@@ -1,0 +1,68 @@
+.page-container {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 0 16px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+
+  h1 {
+    margin: 0;
+  }
+}
+
+.subtitle {
+  color: rgba(0, 0, 0, 0.6);
+  margin-bottom: 24px;
+}
+
+// Styles for loading state
+.state-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 20px;
+  color: rgba(0, 0, 0, 0.54);
+
+  p {
+    margin-top: 16px;
+    font-size: 1.1rem;
+  }
+}
+
+// Table container styles
+.table-container {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+mat-form-field {
+  font-size: 14px;
+  width: 100%;
+  padding: 16px 16px 0 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.clickable-row {
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+}
+
+// Style for the price column to be right-aligned
+th.mat-header-cell:last-of-type,
+td.mat-cell:last-of-type {
+  text-align: right;
+  padding-right: 24px;
+}

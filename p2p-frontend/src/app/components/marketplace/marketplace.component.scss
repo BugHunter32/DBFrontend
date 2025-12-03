@@ -1,0 +1,73 @@
+.page-container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 16px;
+}
+
+.subtitle {
+  color: rgba(0, 0, 0, 0.6);
+  margin-bottom: 24px;
+}
+
+// Styles for loading and empty states
+.state-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 20px;
+  color: rgba(0, 0, 0, 0.54);
+
+  mat-icon {
+    font-size: 64px;
+    width: 64px;
+    height: 64px;
+  }
+
+  p {
+    margin-top: 16px;
+    font-size: 1.1rem;
+  }
+}
+
+// Responsive grid for loan cards
+.loan-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.loan-card {
+  cursor: pointer;
+  transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+}
+
+// Colored avatars for risk scores
+.risk-avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  color: white;
+
+  &.risk-A { background-color: #388e3c; } // Green
+  &.risk-B { background-color: #f57c00; } // Orange
+  &.risk-C { background-color: #d32f2f; } // Red
+}
+
+.funding-details {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+mat-card-actions button mat-icon {
+  margin-right: 4px;
+}

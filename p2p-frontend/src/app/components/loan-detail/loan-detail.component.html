@@ -1,0 +1,87 @@
+<div class="page-container">
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="state-container">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Loading loan details...</p>
+  </div>
+
+  <!-- Not Found State -->
+  <div *ngIf="!isLoading && !loan" class="state-container">
+    <mat-icon>error_outline</mat-icon>
+    <h2>Loan Not Found</h2>
+    <p>The requested loan could not be found or you do not have permission to view it.</p>
+    <button mat-flat-button color="primary" routerLink="/my-loans">Go to My Portfolio</button>
+  </div>
+
+  <!-- ==================================================================== -->
+  <!-- THIS IS THE FIX: Use *ngIf="loan as loanData" to create a safe,      -->
+  <!-- non-nullable template variable named 'loanData'.                     -->
+  <!-- ==================================================================== -->
+  <ng-container *ngIf="!isLoading && loan as loanData">
+
+    <!-- Loan Summary Card (now uses 'loanData') -->
+    <mat-card class="summary-card">
+      <mat-card-header>
+        <div class="card-title-group">
+          <mat-card-title>{{ loanData.amountRequested | currency:'USD' }} Loan</mat-card-title>
+          <mat-card-subtitle>For {{ loanData.borrower.firstName }} {{ loanData.borrower.lastName }}</mat-card-subtitle>
+        </div>
+        <span class="spacer"></span>
+        <mat-chip-listbox>
+          <mat-chip [color]="getStatusColor(loanData.status)" selected>{{ loanData.status.replace('_', ' ') }}</mat-chip>
+        </mat-chip-listbox>
+      </mat-card-header>
+      <mat-card-content class="summary-details">
+        <div><span>Interest Rate</span><strong>{{ loanData.interestRate / 100 | percent:'1.2-2' }}</strong></div>
+        <div><span>Term</span><strong>{{ loanData.termMonths }} months</strong></div>
+        <div><span>Risk Score</span><strong [ngClass]="'risk-' + loanData.riskScore">{{ loanData.riskScore }}</strong></div>
+        <div><span>Application Date</span><strong>{{ loanData.applicationDate | date:'mediumDate' }}</strong></div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Next Installment Card -->
+    <mat-card *ngIf="nextInstallment" class="installment-card">
+      <mat-card-title>Next Installment</mat-card-title>
+      <mat-card-content>
+        <div class="installment-details">
+          <div class="detail-item">
+            <span class="label">Due Date</span>
+            <span class="value date">{{ nextInstallment.dueDate | date:'fullDate' }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Total Amount Due</span>
+            <span class="value amount">{{ nextInstallment.amountDue | currency:'USD' }}</span>
+          </div>
+        </div>
+        <div *ngIf="userRole === 'LENDER' && lenderShare.total > 0" class="lender-share">
+          <mat-divider></mat-divider>
+          <h4>Your Earnings from this Installment</h4>
+          <div class="installment-details">
+            <div class="detail-item"><span>Principal</span><span>{{ lenderShare.principal | currency:'USD' }}</span></div>
+            <div class="detail-item"><span>Interest</span><span>{{ lenderShare.interest | currency:'USD' }}</span></div>
+            <div class="detail-item total"><span>Your Total Earnings</span><span>{{ lenderShare.total | currency:'USD' }}</span></div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+     <!-- Full Repayment Schedule Table -->
+    <!-- This check is now 100% safe, because 'loanData' is guaranteed to exist -->
+     <mat-card *ngIf="loanData.repaymentSchedules && loanData.repaymentSchedules.length > 0">
+      <mat-card-title>Full Repayment Schedule</mat-card-title>
+      <mat-card-content class="table-container">
+        <table mat-table [dataSource]="loanData.repaymentSchedules" class="full-width">
+          <!-- All table content remains the same -->
+          <ng-container matColumnDef="dueDate"><th mat-header-cell *matHeaderCellDef>Due Date</th><td mat-cell *matCellDef="let p">{{ p.dueDate | date:'mediumDate' }}</td></ng-container>
+          <ng-container matColumnDef="principalDue"><th mat-header-cell *matHeaderCellDef>Principal</th><td mat-cell *matCellDef="let p">{{ p.principalDue | currency:'USD' }}</td></ng-container>
+          <ng-container matColumnDef="interestDue"><th mat-header-cell *matHeaderCellDef>Interest</th><td mat-cell *matCellDef="let p">{{ p.interestDue | currency:'USD' }}</td></ng-container>
+          <ng-container matColumnDef="amountDue"><th mat-header-cell *matHeaderCellDef>Total Due</th><td mat-cell *matCellDef="let p">{{ p.amountDue | currency:'USD' }}</td></ng-container>
+          <ng-container matColumnDef="status"><th mat-header-cell *matHeaderCellDef>Status</th><td mat-cell *matCellDef="let p"><span class="status-chip" [ngClass]="'status-' + p.status.toLowerCase()">{{ p.status }}</span></td></ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </mat-card-content>
+    </mat-card>
+
+  </ng-container>
+
+</div>

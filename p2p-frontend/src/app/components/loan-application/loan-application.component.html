@@ -1,0 +1,38 @@
+<div class="form-container">
+  <mat-card>
+    <mat-card-title>Apply for a New Loan</mat-card-title>
+    <mat-card-subtitle>Enter your desired amount and repayment term. Your application will be reviewed by our team.</mat-card-subtitle>
+    
+    <mat-card-content>
+      <form [formGroup]="applicationForm" (ngSubmit)="onSubmit()">
+        
+        <!-- Loan Amount Input -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Loan Amount</mat-label>
+          <span matPrefix>$ &nbsp;</span>
+          <input matInput type="number" formControlName="amount" required min="500" max="50000">
+          <mat-error *ngIf="applicationForm.get('amount')?.hasError('required')">
+            Amount is required.
+          </mat-error>
+          <mat-error *ngIf="applicationForm.get('amount')?.hasError('min')">
+            Minimum loan amount is $500.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Loan Term Slider -->
+        <div class="slider-container">
+            <label id="term-slider-label" class="mat-label">Loan Term: {{ applicationForm.get('term')?.value }} months</label>
+            <mat-slider min="6" max="60" step="6" discrete>
+                <input matSliderThumb formControlName="term" aria-labelledby="term-slider-label">
+            </mat-slider>
+        </div>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="applicationForm.invalid || isSubmitting" class="full-width">
+          <span *ngIf="!isSubmitting">Submit Application</span>
+          <mat-spinner *ngIf="isSubmitting" diameter="24" style="display: inline-block; margin: 0 auto;"></mat-spinner>
+        </button>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

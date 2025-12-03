@@ -1,0 +1,42 @@
+<div class="page-container">
+  <h1>Loan Marketplace</h1>
+  <p class="subtitle">Browse and invest in peer-to-peer loans. New opportunities are added daily.</p>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="state-container">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Loading available loans...</p>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!isLoading && loans.length === 0" class="state-container">
+    <mat-icon>storefront</mat-icon>
+    <p>There are currently no loans available on the marketplace. Please check back later.</p>
+  </div>
+
+  <!-- Data State: Loan Grid -->
+  <div *ngIf="!isLoading && loans.length > 0" class="loan-grid">
+    <mat-card *ngFor="let loan of loans" class="loan-card" (click)="viewLoanDetails(loan.loanId)" matTooltip="Click to see more details">
+      <mat-card-header>
+        <div mat-card-avatar class="risk-avatar" [ngClass]="'risk-' + loan.riskScore">{{ loan.riskScore }}</div>
+        <mat-card-title>{{ loan.amountRequested | currency:'USD' }} Loan</mat-card-title>
+        <mat-card-subtitle>for {{ loan.termMonths }} months at {{ loan.interestRate | percent:'1.2-2' }} APR</mat-card-subtitle>
+      </mat-card-header>
+      
+      <mat-card-content>
+        <div class="funding-details">
+          <span>{{ loan.amountFunded | currency:'USD' }} funded</span>
+          <span>{{ (loan.amountFunded / loan.amountRequested) | percent:'1.0-0' }}</span>
+        </div>
+        <mat-progress-bar mode="determinate" [value]="calculateFundingProgress(loan)"></mat-progress-bar>
+      </mat-card-content>
+      
+      <mat-card-actions align="end">
+        <button mat-flat-button color="primary" (click)="openInvestDialog(loan, $event)">
+          <mat-icon>savings</mat-icon>
+          Invest
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

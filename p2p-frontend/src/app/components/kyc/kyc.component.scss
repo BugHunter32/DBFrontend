@@ -1,0 +1,76 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 50px;
+}
+
+.kyc-container {
+  width: 100%;
+  max-width: 600px;
+}
+
+.upload-section {
+  margin: 20px 0;
+  display: flex;
+  align-items: center;
+
+  .file-name {
+    margin-left: 16px;
+    font-style: italic;
+    color: #616161;
+  }
+}
+
+.status-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 24px;
+  border-radius: 4px;
+  
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 16px;
+  }
+
+  h3 {
+    margin-top: 0;
+  }
+
+  &.pending {
+    background-color: #e3f2fd; // Light blue
+    color: #0d47a1;
+    mat-icon { color: #1976d2; }
+  }
+
+  &.approved {
+    background-color: #e8f5e9; // Light green
+    color: #1b5e20;
+    mat-icon { color: #388e3c; }
+  }
+  
+  &.rejected {
+    background-color: #ffebee; // Light red
+    color: #b71c1c;
+    align-items: flex-start;
+    text-align: left;
+    
+    .notes {
+        background-color: #ffcdd2;
+        padding: 8px;
+        border-radius: 4px;
+        font-family: monospace;
+    }
+  }
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}

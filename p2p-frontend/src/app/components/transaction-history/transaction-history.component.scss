@@ -1,0 +1,65 @@
+.history-card {
+  width: 100%;
+}
+
+// Styles for loading and empty states
+.state-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  color: rgba(0, 0, 0, 0.54);
+
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+  }
+
+  p {
+    margin-top: 16px;
+    font-size: 1rem;
+  }
+}
+
+// Styles for the transaction list items
+mat-list-item {
+  height: auto !important; // Allow items to have variable height
+  padding: 12px 0 !important;
+  position: relative;
+}
+
+.description {
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.details {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8em;
+  color: #616161;
+}
+
+.amount {
+  font-size: 1.1rem;
+  font-weight: bold;
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+}
+
+// Color classes for credit/debit/neutral amounts and icons
+.credit {
+  color: #2e7d32; // Darker Green
+}
+
+.debit {
+  color: #c62828; // Darker Red
+}
+
+.neutral {
+  color: rgba(0, 0, 0, 0.6);
+}

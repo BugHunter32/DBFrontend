@@ -1,0 +1,104 @@
+:host {
+  --metric-color-1: #007bff; // Blue for users/loans
+  --metric-color-2: #ffc107; // Yellow for pending/actions
+  --metric-color-3: #28a745; // Green for finance/revenue
+  --metric-color-4: #6f42c1; // Purple for stocks
+  --card-bg: #ffffff;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  --card-hover-shadow: 0 7px 14px rgba(0, 0, 0, 0.07);
+}
+
+.dashboard-container {
+  padding: 24px;
+  background-color: #f8f9fa;
+  font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+  font-size: 2.2rem;
+  font-weight: 300;
+  color: #343a40;
+  margin-bottom: 32px;
+}
+
+// Styles for the loading state
+.state-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 20px;
+  color: var(--text-secondary);
+  p {
+    margin-top: 16px;
+    font-size: 1.1rem;
+  }
+}
+
+// Responsive grid for the metric cards
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.metric-card {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  border-left-width: 5px;
+  border-left-style: solid;
+  box-shadow: var(--card-shadow);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  position: relative;
+  overflow: hidden; // To contain the large icon
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--card-hover-shadow);
+  }
+
+  mat-card-content {
+    padding: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.metric-value {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 4px 0;
+}
+
+.metric-label {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+// Large, subtle icon in the background
+.metric-icon {
+  position: absolute;
+  font-size: 80px;
+  height: 80px;
+  width: 80px;
+  color: rgba(0, 0, 0, 0.05);
+  top: 50%;
+  right: -20px;
+  transform: translateY(-50%);
+  user-select: none;
+}
+
+// Card-specific border colors
+.card-users { border-left-color: var(--metric-color-1); }
+.card-pending { border-left-color: var(--metric-color-2); }
+.card-loans { border-left-color: var(--metric-color-1); }
+.card-finance { border-left-color: var(--metric-color-3); }
+.card-stocks { border-left-color: var(--metric-color-4); }
+.card-revenue { border-left-color: var(--metric-color-3); }

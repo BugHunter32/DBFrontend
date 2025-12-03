@@ -1,0 +1,94 @@
+<div class="kyc-review-container">
+  <h1>KYC Review Queue</h1>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="state-container">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Loading pending submissions...</p>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!isLoading && pendingSubmissions.length === 0" class="state-container">
+    <mat-icon>done_all</mat-icon>
+    <h2>All Clear!</h2>
+    <p>There are no pending KYC submissions to review.</p>
+  </div>
+
+  <!-- Data State -->
+  <div *ngIf="!isLoading && pendingSubmissions.length > 0" class="review-layout">
+    
+    <!-- Left Column: Pending Queue -->
+    <mat-card class="queue-card">
+      <mat-card-header>
+        <mat-card-title>Pending ({{ pendingSubmissions.length }})</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item *ngFor="let sub of pendingSubmissions" (click)="selectSubmission(sub)" 
+                         [class.selected]="selectedSubmission?.kycId === sub.kycId">
+            <mat-icon mat-list-icon>account_box</mat-icon>
+            <!-- Display the user's name in the queue -->
+            <div mat-line>{{ sub.user.firstName }} {{ sub.user.lastName }}</div>
+            <div mat-line class="sub-line">Submitted: {{ sub.submittedAt | date:'short' }}</div>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Right Column: Detail View -->
+    <mat-card class="detail-card">
+      <mat-card-content>
+        <!-- Prompt to select an item -->
+        <div *ngIf="!selectedSubmission" class="state-container">
+          <mat-icon>rule</mat-icon>
+          <p>Select a submission from the queue to review it.</p>
+        </div>
+
+        <!-- Details of the selected item -->
+        <div *ngIf="selectedSubmission">
+          <h2>Reviewing Submission for {{ selectedSubmission.user.firstName }} {{ selectedSubmission.user.lastName }}</h2>
+          <mat-divider></mat-divider>
+          <div class="detail-grid">
+            <p><strong>User ID:</strong> {{ selectedSubmission.user.userId }}</p>
+            <p><strong>Email:</strong> {{ selectedSubmission.user.email }}</p>
+            <p><strong>Submitted At:</strong> {{ selectedSubmission.submittedAt | date:'medium' }}</p>
+            <p><strong>Document Type:</strong> {{ selectedSubmission.documentType }}</p>
+          </div>
+
+          <!-- Document Viewer (placeholder) -->
+          <div class="document-viewer">
+            <p><strong>Submitted Document:</strong></p>
+            <!-- In a real app, this would be an iframe, an image tag, or a PDF viewer -->
+            <a [href]="selectedSubmission.documentUrl" target="_blank" rel="noopener noreferrer">
+              <mat-icon>visibility</mat-icon>
+              View Document (Opens in new tab)
+            </a>
+          </div>
+
+          <mat-divider></mat-divider>
+
+          <!-- Actions -->
+          <div class="actions-container">
+            <h3>Decision</h3>
+            <div class="rejection-notes" [formGroup]="rejectionNotesForm">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Rejection Notes (if applicable)</mat-label>
+                <textarea matInput formControlName="notes" rows="3"></textarea>
+              </mat-form-field>
+            </div>
+            
+            <div class="action-buttons">
+              <button mat-flat-button color="warn" (click)="reviewSubmission('REJECTED')" [disabled]="isProcessing">
+                Reject
+              </button>
+              <button mat-flat-button color="primary" (click)="reviewSubmission('APPROVED')" [disabled]="isProcessing">
+                Approve
+              </button>
+            </div>
+            <mat-progress-spinner *ngIf="isProcessing" mode="indeterminate" diameter="30"></mat-progress-spinner>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+// Toolbar ko modern look dene ke liye base styles
+mat-toolbar {
+  display: flex;
+  align-items: center;
+  padding: 0 24px; // Thodi extra padding
+  box-shadow: 0 3px 5px -1px rgba(0,0,0,.2),
+              0 6px 10px 0 rgba(0,0,0,.14),
+              0 1px 18px 0 rgba(0,0,0,.12); // Subtle shadow
+}
+
+// Platform ke title ko thoda prominent banate hain
+mat-toolbar span:first-child {
+  font-weight: 500;
+  font-size: 1.25rem;
+}
+
+// Spacer, jo title aur buttons ko alag karta hai
+.spacer {
+  flex: 1 1 auto;
+}
+
+// Toolbar ke sabhi buttons aur links ke liye common styles
+mat-toolbar a[mat-button],
+mat-toolbar button[mat-button] {
+  margin-left: 8px; // Buttons ke beech mein thoda gap
+  transition: background-color 0.3s ease, color 0.3s ease; // Smooth hover effect
+  border-radius: 4px; // Halke se rounded corners
+
+  // Jab mouse button par le jaayein
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+  }
+}
+
+// Icon wale buttons ke liye behtar alignment
+mat-toolbar a[mat-button] mat-icon {
+  margin-right: 6px; // Icon aur text ke beech gap
+  vertical-align: middle; // Text ke saath aasaani se align ho
+}
+
+// Main content area, jahaan aapke pages dikhenge
+.content {
+  padding: 24px;
+}

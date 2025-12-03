@@ -1,0 +1,162 @@
+// Define a color palette for easier management
+:host {
+  --admin-bg: #f4f7fa;
+  --sidenav-bg: #ffffff;
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --border-color: #e2e8f0;
+  --primary-color: #3f51b5;
+  --primary-color-light: #e8eaf6;
+
+  display: block;
+  height: calc(100vh - 64px); // Assumes main app toolbar is 64px
+}
+
+.admin-container {
+  height: 100%;
+}
+
+.admin-sidenav {
+  width: 280px;
+  background-color: var(--sidenav-bg);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+
+  .sidenav-header {
+    background: var(--sidenav-bg);
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    padding: 16px;
+    border-bottom: 1px solid var(--border-color);
+    
+    .app-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+  }
+
+  .user-profile {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    border-radius: 8px;
+    background-color: var(--admin-bg);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: var(--border-color);
+    }
+  
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      margin-right: 12px;
+    }
+  
+    .user-info {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+  
+      .user-name {
+        font-weight: 600;
+        font-size: 0.9rem;
+        line-height: 1.2;
+      }
+  
+      .user-role {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+      }
+    }
+  }
+
+  mat-nav-list {
+    flex-grow: 1;
+    padding-top: 16px;
+
+    a[mat-list-item] {
+      color: var(--text-secondary);
+      font-weight: 500;
+      margin: 0 8px;
+      border-radius: 6px;
+      transition: background-color 0.2s ease, color 0.2s ease;
+
+      mat-icon {
+        color: var(--text-secondary);
+        transition: color 0.2s ease;
+      }
+
+      &:hover {
+        background-color: var(--primary-color-light);
+        color: var(--primary-color);
+        mat-icon { color: var(--primary-color); }
+      }
+    }
+
+    h3[mat-subheader] {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin: 16px 16px 8px 16px;
+    }
+  }
+}
+
+// Style for the currently active link
+.active-link {
+  background-color: var(--primary-color-light);
+  color: var(--primary-color) !important;
+  position: relative;
+  // The colored left border indicator
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 60%;
+    width: 4px;
+    background-color: var(--primary-color);
+    border-radius: 0 4px 4px 0;
+  }
+
+  mat-icon {
+    color: var(--primary-color) !important;
+  }
+}
+
+.admin-content {
+  background-color: var(--admin-bg);
+  
+  .content-toolbar {
+    background-color: var(--sidenav-bg);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  .content-wrapper {
+    padding: 24px;
+  }
+}
+
+.sidenav-footer {
+  padding: 16px;
+  border-top: 1px solid var(--border-color);
+
+  a {
+    width: 100%;
+  }
+}

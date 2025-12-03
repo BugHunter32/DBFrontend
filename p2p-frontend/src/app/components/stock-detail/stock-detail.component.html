@@ -1,0 +1,51 @@
+<div class="page-container">
+  <div *ngIf="!isLoading && stock; else loadingSpinner">
+    <mat-card>
+      <mat-card-header class="card-header">
+        <div class="header-info">
+          <mat-card-title>{{ stock.companyName }} ({{ stock.symbol }})</mat-card-title>
+          <mat-card-subtitle class="current-price">{{ stock.currentPrice | currency:'USD' }}</mat-card-subtitle>
+        </div>
+        <div class="header-actions">
+          <button mat-flat-button color="primary" (click)="openTradeDialog('BUY')">
+            <mat-icon>add_shopping_cart</mat-icon>
+            Buy
+          </button>
+          <button mat-flat-button color="warn" (click)="openTradeDialog('SELL')" [disabled]="!userHolding || userHolding.quantity <= 0">
+            <mat-icon>sell</mat-icon>
+            Sell
+          </button>
+        </div>
+      </mat-card-header>
+
+      <mat-divider></mat-divider>
+      
+      <mat-card-content>
+        <!-- User's current holding info -->
+        <div *ngIf="userHolding && userHolding.quantity > 0" class="user-holding">
+          You own <strong>{{ userHolding.quantity | number }}</strong> shares at an average price of <strong>{{ userHolding.averageBuyPrice | currency:'USD' }}</strong>.
+        </div>
+        <div *ngIf="!userHolding || userHolding.quantity <= 0" class="user-holding">
+          You do not currently own any shares of this stock.
+        </div>
+
+        <!-- The Chart -->
+        <div class="chart-container">
+          <canvas baseChart
+            [data]="lineChartData"
+            [options]="lineChartOptions"
+            [legend]="lineChartLegend"
+            type="line">
+          </canvas>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Loading Spinner Template -->
+  <ng-template #loadingSpinner>
+    <div class="spinner-container">
+      <mat-spinner diameter="50"></mat-spinner>
+    </div>
+  </ng-template>
+</div>

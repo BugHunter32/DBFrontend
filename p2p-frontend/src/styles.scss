@@ -1,0 +1,22 @@
+// In src/app/components/login/login.component.scss
+// (and other component scss files)
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 50px;
+}
+
+.form-container {
+  width: 100%;
+  max-width: 400px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+mat-card-actions {
+  text-align: center;
+  margin-top: 16px;
+}
